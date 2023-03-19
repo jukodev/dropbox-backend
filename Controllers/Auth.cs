@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Http;
+﻿using drop_grungus.Models;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 
 namespace drop_grungus.Controllers
@@ -9,13 +10,13 @@ namespace drop_grungus.Controllers
     {
         [HttpPost("/login")]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
-        public IActionResult Login([FromBody] string username, [FromBody] string password) {
+        public IActionResult Login([FromBody] User user) {
             return NotFound();
         }
 
         [HttpPost("/validate")]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
-        public IActionResult Login([FromBody] string token)
+        public IActionResult Validate([FromBody] string token)
         {
             return NotFound();
         }
