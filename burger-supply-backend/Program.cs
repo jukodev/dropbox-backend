@@ -1,7 +1,8 @@
 using burger_supply_backend.Database;
+using burger_supply_backend.Middlewares;
 using Microsoft.EntityFrameworkCore;
 
-var cors = "_allowAny";
+const string cors = "_allowAny";
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -27,7 +28,6 @@ builder.Services.AddDbContext<DataContext>(options =>
 
 var app = builder.Build();
 
-// Configure the HTTP request pipeline.
 if (app.Environment.IsDevelopment())
 {
     app.UseSwagger();
@@ -37,4 +37,7 @@ if (app.Environment.IsDevelopment())
 app.UseHttpsRedirection();
 app.UseCors(cors);
 
+app.UseMiddleware<AuthMiddleware>();
+
+app.MapControllers();
 app.Run();
