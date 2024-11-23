@@ -20,7 +20,7 @@ public class AuthMiddleware(RequestDelegate next)
             return;
         }
         
-        var session = await dbContext.Sessions.FirstOrDefaultAsync(s => s.SessionId == sessionId);
+        var session = await dbContext.Sessions.Include(sessionDbModel => sessionDbModel.User).FirstOrDefaultAsync(s => s.SessionId == sessionId);
         if (session == null)
         {
             context.Response.StatusCode = StatusCodes.Status401Unauthorized;
@@ -34,6 +34,8 @@ public class AuthMiddleware(RequestDelegate next)
             await dbContext.SaveChangesAsync();
             return;
         }
+        
+        context.Items["User"] = session.User;
         
         await next(context);
     }
